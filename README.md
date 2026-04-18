@@ -41,3 +41,9 @@ npx prisma migrate dev
 
 # Start the development server
 npm run dev
+team members
+bukenya glenn matthew
+busulwa peter
+asasira queen pinklen
+ampumuza recheal
+lukoda fahad
