@@ -1,5 +1,5 @@
-describe('Example Unit Test', () => {
-  it('should pass this simple test', () => {
+describe('Unit Test', () => {
+  it('should pass', () => {
     expect(1 + 1).toBe(2)
   })
 })
