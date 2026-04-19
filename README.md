@@ -24,16 +24,16 @@ A production‑ready RESTful API for user authentication and profile management.
 
 ### Installation
 Step	       	Tools / Actions
-1. Scaffold		npx create-next-app@latest --typescript --tailwind + npm install prisma @prisma/client bcryptjs jose zod
-2. Database	  npx prisma init --datasource-provider sqlite (skip PostgreSQL – no server needed)
-3. Schema	    Copy a standard User model with id, email, password, name
-4. Auth helpers		Write hashPassword, comparePassword, generateToken, verifyToken using bcryptjs + jose
-5. API routes		Write register, login, users/me (GET, PUT, DELETE) – copy‑paste from a boilerplate
-6. Validation	  Add Zod schemas for each endpoint
-7. Tests	     	Write one unit test (validation), one integration test (/register), one system test (full flow) – reuse existing patterns
-8. CI/CD	    	Copy a GitHub Actions workflow that uses a PostgreSQL service container (or SQLite in‑memory)
-9. README + Postman		Export a Postman collection, write a minimal README with endpoints and setup
-10. Defect log		List 3–4 bugs you fixed (e.g., “JWT secret missing”, “Prisma provider mismatch”)
+1. Scaffold	---	npx create-next-app@latest --typescript --tailwind + npm install prisma @prisma/client bcryptjs jose zod
+2. Database	---  npx prisma init --datasource-provider sqlite (skip PostgreSQL – no server needed)
+3. Schema	  ---  Copy a standard User model with id, email, password, name
+4. Auth helpers	---	Write hashPassword, comparePassword, generateToken, verifyToken using bcryptjs + jose
+5. API routes	---	Write register, login, users/me (GET, PUT, DELETE) – copy‑paste from a boilerplate
+6. Validation	---  Add Zod schemas for each endpoint
+7. Tests	 ---    	Write one unit test (validation), one integration test (/register), one system test (full flow) – reuse existing patterns
+8. CI/CD	 ---   	Copy a GitHub Actions workflow that uses a PostgreSQL service container (or SQLite in‑memory)
+9. README + Postman		--- Export a Postman collection, write a minimal README with endpoints and setup
+10. Defect log	--- 	List 3–4 bugs you fixed (e.g., “JWT secret missing”, “Prisma provider mismatch”)
 
 ```bash
 # Clone the repository
