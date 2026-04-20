@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
 
-    // Optional: Set HTTP-only cookie for token
+    // cookie for token
     response.cookies.set('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

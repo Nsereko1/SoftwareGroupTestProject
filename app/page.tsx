@@ -1,8 +1,15 @@
-// app/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -10,28 +17,27 @@ export default function Home() {
   const [name, setName] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [token, setToken] = useState("");
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Auto-fetch user data when token exists
-  useEffect(() => {
-    if (token) {
-      fetchUserData();
-    }
-  }, [token]);
-
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
+    if (!token) return;
     const response = await fetch("/api/users/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     if (response.ok) {
       const data = await response.json();
       setUser(data.user);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    if (token) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      fetchUserData();
+    }
+  }, [token, fetchUserData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,15 +59,13 @@ export default function Home() {
       if (response.ok) {
         setToken(data.token);
         setMessage(isLogin ? "✅ Login successful!" : "✅ Registration successful!");
-        if (!isLogin) {
-          setName("");
-        }
+        if (!isLogin) setName("");
         setEmail("");
         setPassword("");
       } else {
         setMessage(`❌ Error: ${data.error || "Something went wrong"}`);
       }
-    } catch (error) {
+    } catch {
       setMessage("❌ Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -101,9 +105,7 @@ export default function Home() {
 
     const response = await fetch("/api/users/me", {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (response.ok) {
@@ -114,7 +116,6 @@ export default function Home() {
     }
   };
 
-  // If logged in, show user dashboard
   if (token && user) {
     return (
       <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black min-h-screen">
@@ -143,7 +144,7 @@ export default function Home() {
                   Welcome back, {user.name}!
                 </h1>
                 <p className="mt-2 text-lg text-zinc-600 dark:text-zinc-400">
-                  You're successfully authenticated with JWT.
+                  You&apos;re successfully authenticated with JWT.
                 </p>
               </div>
 
@@ -194,7 +195,6 @@ export default function Home() {
     );
   }
 
-  // Login/Register form
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black min-h-screen">
       <main className="flex w-full max-w-md flex-col items-center justify-between py-12 px-8 bg-white dark:bg-black rounded-2xl border border-black/[.08] dark:border-white/[.145] shadow-sm">
