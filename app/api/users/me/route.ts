@@ -55,7 +55,7 @@ export async function PUT(request: NextRequest) {
     })
 
     return NextResponse.json({ user: updatedUser, message: 'Profile updated successfully' }, { status: 200 })
-  } catch {
+  } catch (_error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
@@ -69,7 +69,7 @@ export async function DELETE(request: NextRequest) {
   try {
     await prisma.user.delete({ where: { id: user.id } })
     return NextResponse.json({ message: 'Account deleted successfully' }, { status: 200 })
-  } catch {
+  } catch (_error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
